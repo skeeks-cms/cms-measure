@@ -3,8 +3,10 @@
 namespace skeeks\cms\measure\models;
 
 use skeeks\cms\components\Cms;
+use skeeks\cms\measure\libs\MeasureClassifier;
 use Yii;
 use yii\base\Event;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%measure}}".
@@ -39,9 +41,33 @@ class Measure extends \skeeks\cms\models\Core
 
         $this->on(self::EVENT_BEFORE_INSERT, [$this, 'beforeInsertChecks']);
         $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'beforeUpdateChecks']);
-
+        $this->on(self::EVENT_AFTER_FIND, [$this, 'afterFindInit']);
     }
 
+    public function afterFindInit(Event $e)
+    {
+        $libsInfo = $this->getMeasureClassifierInfo();
+
+        if (!$this->name)
+        {
+            $this->name = ArrayHelper::getValue($libsInfo, 'MEASURE_TITLE');
+        }
+
+        if (!$this->symbol_rus)
+        {
+            $this->symbol_rus = ArrayHelper::getValue($libsInfo, 'SYMBOL_RUS');
+        }
+
+        if (!$this->symbol_intl)
+        {
+            $this->symbol_intl = ArrayHelper::getValue($libsInfo, 'SYMBOL_INTL');
+        }
+
+        if (!$this->symbol_letter_intl)
+        {
+            $this->symbol_letter_intl = ArrayHelper::getValue($libsInfo, 'SYMBOL_LETTER_INTL');
+        }
+    }
     /**
      * @param Event $e
      * @throws Exception
@@ -108,5 +134,14 @@ class Measure extends \skeeks\cms\models\Core
             'symbol_letter_intl' => Yii::t('app', 'Кодовое буквенное обозначение (международное)'),
             'def' => Yii::t('app', 'Default'),
         ];
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getMeasureClassifierInfo()
+    {
+        return (array) MeasureClassifier::getMeasureInfoByCode($this->code);
     }
 }

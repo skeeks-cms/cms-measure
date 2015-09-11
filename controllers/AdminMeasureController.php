@@ -10,6 +10,7 @@ use skeeks\cms\components\Cms;
 use skeeks\cms\grid\BooleanColumn;
 use skeeks\cms\helpers\RequestResponse;
 use skeeks\cms\kladr\models\KladrLocation;
+use skeeks\cms\measure\libs\MeasureClassifier;
 use skeeks\cms\measure\models\Measure;
 use skeeks\cms\modules\admin\actions\AdminAction;
 use skeeks\cms\modules\admin\actions\modelEditor\AdminMultiModelEditAction;

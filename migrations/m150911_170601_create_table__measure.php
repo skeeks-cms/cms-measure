@@ -71,7 +71,7 @@ class m150911_170601_create_table__measure extends Migration
 
 
         $this->insert('{{%measure}}', [
-            'code'                  => 6,
+            'code'                  => 006,
             'symbol_intl'           => 'm',
             'symbol_letter_intl'    => 'MTR',
         ]);
