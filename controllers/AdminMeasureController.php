@@ -1,0 +1,92 @@
+<?php
+/**
+ * @author Semenov Alexander <semenov@skeeks.com>
+ * @link http://skeeks.com/
+ * @copyright 2010 SkeekS (СкикС)
+ * @date 28.08.2015
+ */
+namespace skeeks\cms\measure\controllers;
+use skeeks\cms\components\Cms;
+use skeeks\cms\grid\BooleanColumn;
+use skeeks\cms\helpers\RequestResponse;
+use skeeks\cms\kladr\models\KladrLocation;
+use skeeks\cms\measure\models\Measure;
+use skeeks\cms\modules\admin\actions\AdminAction;
+use skeeks\cms\modules\admin\actions\modelEditor\AdminMultiModelEditAction;
+use skeeks\cms\modules\admin\controllers\AdminModelEditorController;
+use skeeks\cms\modules\admin\traits\AdminModelEditorStandartControllerTrait;
+use yii\grid\DataColumn;
+use yii\helpers\ArrayHelper;
+
+/**
+ * Class AdminKladrLocationController
+ * @package skeeks\cms\kladr\controllers
+ */
+class AdminMeasureController extends AdminModelEditorController
+{
+    use AdminModelEditorStandartControllerTrait;
+
+    public function init()
+    {
+        $this->name                     = "Единицы измерений";
+        $this->modelShowAttribute       = "code";
+        $this->modelClassName           = Measure::className();
+
+        parent::init();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return ArrayHelper::merge(parent::actions(),
+            [
+                'index' =>
+                [
+                    "columns"      => [
+                        'code',
+                        'name',
+
+                        'symbol_rus',
+                        'symbol_intl',
+                        'symbol_letter_intl',
+
+                        [
+                            'class'     => BooleanColumn::className(),
+                            'attribute' => 'def',
+                        ]
+                    ],
+                ],
+
+                "def-multi" =>
+                [
+                    'class'             => AdminMultiModelEditAction::className(),
+                    "name"              => "По умолчанию",
+                    //"icon"              => "glyphicon glyphicon-trash",
+                    "eachCallback"      => [$this, 'eachMultiDef'],
+                    "priority"          => 0,
+                ],
+            ]
+        );
+    }
+
+
+    /**
+     * @param $model
+     * @param $action
+     * @return bool
+     */
+    public function eachMultiDef($model, $action)
+    {
+        try
+        {
+            $model->def = Cms::BOOL_Y;
+            return $model->save(false);
+        } catch (\Exception $e)
+        {
+            return false;
+        }
+    }
+
+}
