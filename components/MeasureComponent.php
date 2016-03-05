@@ -15,7 +15,6 @@ use yii\helpers\ArrayHelper;
  */
 class MeasureComponent extends Component
 {
-
     /**
      * Можно задать название и описание компонента
      * @return array
@@ -26,24 +25,4 @@ class MeasureComponent extends Component
             'name'          => 'Единицы измерений',
         ]);
     }
-
-    /**
-     * @var string
-     */
-    public $kladrApiToken               = "55ef04730a69de3d758b456a";
-
-    public function rules()
-    {
-        return ArrayHelper::merge(parent::rules(), [
-            [['kladrApiToken'], 'string'],
-        ]);
-    }
-
-    public function attributeLabels()
-    {
-        return ArrayHelper::merge(parent::attributeLabels(), [
-            'kladrApiToken'                     => 'Токен с kladr-api.ru',
-        ]);
-    }
-
 }
