@@ -29,7 +29,7 @@ class AdminMeasureController extends AdminModelEditorController
 
     public function init()
     {
-        $this->name                     = "Единицы измерений";
+        $this->name                     = \Yii::t('skeeks/measure', 'Units of measurement');
         $this->modelShowAttribute       = "code";
         $this->modelClassName           = Measure::className();
 
@@ -63,7 +63,7 @@ class AdminMeasureController extends AdminModelEditorController
                 "def-multi" =>
                 [
                     'class'             => AdminMultiModelEditAction::className(),
-                    "name"              => "По умолчанию",
+                    "name"              => \Yii::t('skeeks/measure', 'Default'),
                     //"icon"              => "glyphicon glyphicon-trash",
                     "eachCallback"      => [$this, 'eachMultiDef'],
                     "priority"          => 0,

@@ -11,7 +11,20 @@ return [
     [
         'measure' => [
             'class'         => 'skeeks\cms\measure\components\MeasureComponent',
-        ]
+        ],
+
+        'i18n' => [
+            'translations' =>
+            [
+                'skeeks/measure' => [
+                    'class'             => 'yii\i18n\PhpMessageSource',
+                    'basePath'          => '@skeeks/cms/measure/messages',
+                    'fileMap' => [
+                        'skeeks/measure' => 'main.php',
+                    ],
+                ]
+            ]
+        ],
     ],
 
     'modules' =>

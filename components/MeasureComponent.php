@@ -22,7 +22,7 @@ class MeasureComponent extends Component
     static public function descriptorConfig()
     {
         return array_merge(parent::descriptorConfig(), [
-            'name'          => 'Единицы измерений',
+            'name'          => \Yii::t('skeeks/measure', 'Units of measurement'),
         ]);
     }
 }

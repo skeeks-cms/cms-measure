@@ -1287,7 +1287,7 @@ class MeasureClassifier
 			),
 		);
 
-		if(\Yii::$app->cms->languageCode === 'ru' || \Yii::$app->cms->languageCode === 'uk' || \Yii::$app->cms->languageCode === 'by')
+		if(\Yii::$app->language === 'ru' || \Yii::$app->language === 'uk' || \Yii::$app->language === 'by')
 		{
 			self::$unitsClassifier[] =
 				array(

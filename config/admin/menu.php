@@ -12,19 +12,19 @@ return [
         'items' =>
         [
             [
-                "label"     => "Единицы измерений",
+                "label"     => \Yii::t('skeeks/measure', 'Units of measurement'),
                 "img"       => ['\skeeks\cms\measure\assets\Asset', 'icons/misc.png'],
 
                 'items' =>
                 [
                     [
-                        "label"     => "Единицы измерений",
+                        "label"     => \Yii::t('skeeks/measure', 'Units of measurement'),
                         "url"       => ["measure/admin-measure"],
                         "img"       => ['\skeeks\cms\measure\assets\Asset', 'icons/misc.png'],
                     ],
 
                     [
-                        "label" => "Настройки",
+                        "label" => \Yii::t('skeeks/measure', 'Settings'),
                         "url"   => ["cms/admin-settings", "component" => 'skeeks\cms\measure\components\MeasureComponent'],
                         "img"       => ['\skeeks\cms\modules\admin\assets\AdminAsset', 'images/icons/settings.png'],
                         "activeCallback"       => function(\skeeks\cms\modules\admin\helpers\AdminMenuItem $adminMenuItem)

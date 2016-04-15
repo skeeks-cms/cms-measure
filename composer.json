@@ -2,13 +2,13 @@
     "name": "skeeks/cms-measure",
     "description": "Единицы измерений для SkeekS CMS",
     "keywords": ["module", "cms", "skeeks", "sx", "app", "yii2", "measure"],
-    "homepage": "http://www.skeeks.com/",
+    "homepage": "http://skeeks.com/",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "http://cms.skeeks.com",
-        "wiki": "http://git.skeeks.com/skeeks/cms/wikis/home",
-        "source": "http://git.skeeks.com/skeeks/cms"
+        "wiki": "http://en.cms.skeeks.com/demo",
+        "source": "https://github.com/skeeks-cms/cms-measure"
     },
     "authors": [
         {
