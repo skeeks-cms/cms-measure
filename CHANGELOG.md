@@ -3,6 +3,7 @@
 
 1.2.0
 -----------------
+  * Removed skeeks/cms/base/Module
   * Added internationalization
 
 1.1.1

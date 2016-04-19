@@ -10,7 +10,7 @@ namespace skeeks\cms\measure;
  * Class Module
  * @package skeeks\cms\kladr
  */
-class Module extends \skeeks\cms\base\Module
+class Module extends \yii\web\Module
 {
     public $controllerNamespace = 'skeeks\cms\measure\controllers';
 }
