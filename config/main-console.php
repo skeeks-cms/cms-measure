@@ -14,10 +14,10 @@ return [
         ]
     ],
 
-    'modules' =>
+    /*'modules' =>
     [
         'measure' => [
             'class'         => 'skeeks\cms\measure\Module',
         ]
-    ]
+    ]*/
 ];
