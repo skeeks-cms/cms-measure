@@ -13,7 +13,7 @@ use skeeks\cms\modules\admin\widgets\form\ActiveFormUseTab as ActiveForm;
 
 <?php $form = ActiveForm::begin(); ?>
 
-<?= $form->fieldSet('Основное'); ?>
+<?= $form->fieldSet(\Yii::t('skeeks/measure','Main')); ?>
 
     <?= $form->fieldInputInt($model, 'code')->textInput(); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => 500]); ?>
