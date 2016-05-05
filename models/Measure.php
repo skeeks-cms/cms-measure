@@ -122,17 +122,17 @@ class Measure extends \skeeks\cms\models\Core
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'code' => Yii::t('app', 'Code'),
-            'name' => Yii::t('app', 'Наименование единицы измерения'),
-            'symbol_rus' => Yii::t('app', 'Условное обозначение'),
-            'symbol_intl' => Yii::t('app', 'Условное обозначение (международное)'),
-            'symbol_letter_intl' => Yii::t('app', 'Кодовое буквенное обозначение (международное)'),
-            'def' => Yii::t('app', 'Default'),
+            'id' => \Yii::t('skeeks/measure', 'ID'),
+            'created_by' => \Yii::t('skeeks/measure', 'Created By'),
+            'updated_by' => \Yii::t('skeeks/measure', 'Updated By'),
+            'created_at' => \Yii::t('skeeks/measure', 'Created At'),
+            'updated_at' => \Yii::t('skeeks/measure', 'Updated At'),
+            'code' => \Yii::t('skeeks/measure', 'Code'),
+            'name' => \Yii::t('skeeks/measure', 'Unit of measure'),
+            'symbol_rus' => \Yii::t('skeeks/measure', 'Conventional symbol'),
+            'symbol_intl' => \Yii::t('skeeks/measure', 'Conventional symbol (international)'),
+            'symbol_letter_intl' => \Yii::t('skeeks/measure', 'The code letter of symbol (international)'),
+            'def' => \Yii::t('skeeks/measure', 'Default'),
         ];
     }
 
