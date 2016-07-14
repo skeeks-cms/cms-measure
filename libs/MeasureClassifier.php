@@ -15,7 +15,7 @@ class MeasureClassifier
 {
     protected static $unitsClassifier = null;
 
-	private function _initMeasureClassifier()
+	static private function _initMeasureClassifier()
 	{
 		if (null !== self::$unitsClassifier)
 			return;
