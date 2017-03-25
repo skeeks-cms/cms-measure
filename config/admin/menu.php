@@ -27,7 +27,7 @@ return [
                         "label" => \Yii::t('skeeks/measure', 'Settings'),
                         "url"   => ["cms/admin-settings", "component" => 'skeeks\cms\measure\components\MeasureComponent'],
                         "img"       => ['\skeeks\cms\modules\admin\assets\AdminAsset', 'images/icons/settings.png'],
-                        "activeCallback"       => function(\skeeks\cms\modules\admin\helpers\AdminMenuItem $adminMenuItem)
+                        "activeCallback"       => function($adminMenuItem)
                         {
                             return (bool) (\Yii::$app->request->getUrl() == $adminMenuItem->getUrl());
                         },
