@@ -1,6 +1,10 @@
 CHANGELOG
 ==============
 
+2.0.0.pre
+-----------------
+  * Update SkeekS CMS
+  
 1.3.2
 -----------------
   * Fixed notices
