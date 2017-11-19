@@ -46,18 +46,16 @@ class m150911_170601_create_table__measure extends Migration
         ], $tableOptions);
 
 
-        $this->createIndex('updated_by', '{{%measure}}', 'updated_by');
-        $this->createIndex('created_by', '{{%measure}}', 'created_by');
-        $this->createIndex('created_at', '{{%measure}}', 'created_at');
-        $this->createIndex('updated_at', '{{%measure}}', 'updated_at');
+        $this->createIndex('measure__updated_by', '{{%measure}}', 'updated_by');
+        $this->createIndex('measure__created_by', '{{%measure}}', 'created_by');
+        $this->createIndex('measure__created_at', '{{%measure}}', 'created_at');
+        $this->createIndex('measure__updated_at', '{{%measure}}', 'updated_at');
 
-        $this->createIndex('name', '{{%measure}}', 'name');
-        $this->createIndex('symbol_rus', '{{%measure}}', 'symbol_rus');
-        $this->createIndex('symbol_intl', '{{%measure}}', 'symbol_intl');
-        $this->createIndex('symbol_letter_intl', '{{%measure}}', 'symbol_letter_intl');
-        $this->createIndex('def', '{{%measure}}', 'def');
-
-        $this->execute("ALTER TABLE {{%measure}} COMMENT = 'Единицы измерения';");
+        $this->createIndex('measure__name', '{{%measure}}', 'name');
+        $this->createIndex('measure__symbol_rus', '{{%measure}}', 'symbol_rus');
+        $this->createIndex('measure__symbol_intl', '{{%measure}}', 'symbol_intl');
+        $this->createIndex('measure__symbol_letter_intl', '{{%measure}}', 'symbol_letter_intl');
+        $this->createIndex('measure__def', '{{%measure}}', 'def');
 
         $this->addForeignKey(
             'measure_created_by', "{{%measure}}",
