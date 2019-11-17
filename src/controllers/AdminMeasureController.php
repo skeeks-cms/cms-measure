@@ -46,8 +46,7 @@ class AdminMeasureController extends BackendModelStandartController
      */
     public function actions()
     {
-        return ArrayHelper::merge(parent::actions(),
-            [
+        return ArrayHelper::merge(parent::actions(), [
                 'index' => [
                     'filters' => [
                         'visibleFilters' => [
@@ -87,6 +86,14 @@ class AdminMeasureController extends BackendModelStandartController
                     "eachCallback" => [$this, 'eachMultiDef'],
                     "priority"     => 0,
                 ],
+
+                "create" => [
+                    'fields' => [$this, 'updateFields'],
+                ],
+
+                "update" => [
+                    'fields' => [$this, 'updateFields'],
+                ],
             ]
         );
     }
@@ -105,6 +112,16 @@ class AdminMeasureController extends BackendModelStandartController
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function updateFields() {
+        return [
+            'code',
+            'name',
+            'symbol_rus',
+            'symbol_intl',
+            'symbol_letter_intl',
+        ];
     }
 
 }
