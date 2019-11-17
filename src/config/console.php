@@ -5,4 +5,12 @@
  * @license https://cms.skeeks.com/license/
  * @author Semenov Alexander <semenov@skeeks.com>
  */
-return [];
+return [
+    'controllerMap' => [
+        'migrate' => [
+            'migrationPath' => [
+                '@skeeks/cms/measure/migrations',
+            ],
+        ],
+    ]
+];

@@ -5,7 +5,10 @@
  * @copyright 2010 SkeekS (СкикС)
  * @date 28.08.2015
  */
+
 namespace skeeks\cms\measure\controllers;
+
+use skeeks\cms\backend\controllers\BackendModelStandartController;
 use skeeks\cms\components\Cms;
 use skeeks\cms\grid\BooleanColumn;
 use skeeks\cms\helpers\RequestResponse;
@@ -23,15 +26,17 @@ use yii\helpers\ArrayHelper;
  * Class AdminKladrLocationController
  * @package skeeks\cms\kladr\controllers
  */
-class AdminMeasureController extends AdminModelEditorController
+class AdminMeasureController extends BackendModelStandartController
 {
     use AdminModelEditorStandartControllerTrait;
 
     public function init()
     {
-        $this->name                     = \Yii::t('skeeks/measure', 'Units of measurement');
-        $this->modelShowAttribute       = "code";
-        $this->modelClassName           = Measure::className();
+        $this->name = \Yii::t('skeeks/measure', 'Units of measurement');
+        $this->modelShowAttribute = "code";
+        $this->modelClassName = Measure::className();
+
+        $this->generateAccessActions = false;
 
         parent::init();
     }
@@ -43,30 +48,44 @@ class AdminMeasureController extends AdminModelEditorController
     {
         return ArrayHelper::merge(parent::actions(),
             [
-                'index' =>
-                [
-                    "columns"      => [
-                        'code',
-                        'name',
+                'index' => [
+                    'filters' => [
+                        'visibleFilters' => [
+                            'name',
+                        ],
+                    ],
 
-                        'symbol_rus',
-                        'symbol_intl',
-                        'symbol_letter_intl',
+                    'grid' => [
+                        "visibleColumns" => [
+                            'checkbox',
+                            'actions',
 
-                        [
-                            'class'     => BooleanColumn::className(),
-                            'attribute' => 'def',
-                        ]
+                            'code',
+                            'name',
+
+                            'symbol_rus',
+                            'symbol_intl',
+                            'symbol_letter_intl',
+
+                            'def',
+                        ],
+
+                        'columns' => [
+                            'def' => [
+                                'class' => BooleanColumn::class,
+                                /*'falseValue' => 0,
+                                'trueValue'  => 1,*/
+                            ],
+                        ],
                     ],
                 ],
 
-                "def-multi" =>
-                [
-                    'class'             => AdminMultiModelEditAction::className(),
-                    "name"              => \Yii::t('skeeks/measure', 'Default'),
+                "def-multi" => [
+                    'class'        => AdminMultiModelEditAction::className(),
+                    "name"         => \Yii::t('skeeks/measure', 'Default'),
                     //"icon"              => "glyphicon glyphicon-trash",
-                    "eachCallback"      => [$this, 'eachMultiDef'],
-                    "priority"          => 0,
+                    "eachCallback" => [$this, 'eachMultiDef'],
+                    "priority"     => 0,
                 ],
             ]
         );
@@ -80,12 +99,10 @@ class AdminMeasureController extends AdminModelEditorController
      */
     public function eachMultiDef($model, $action)
     {
-        try
-        {
+        try {
             $model->def = Cms::BOOL_Y;
             return $model->save(false);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return false;
         }
     }
