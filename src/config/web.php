@@ -6,9 +6,45 @@
  * @author Semenov Alexander <semenov@skeeks.com>
  */
 return [
-    'modules' => [
+    'components' => [
+        'backendAdmin' => [
+            'menu' => [
+                'data' => [
+
+                    'other' => [
+                        'items' => [
+                            [
+                                "name" => ['skeeks/measure', 'Units of measurement'],
+                                "image"   => ['\skeeks\cms\measure\assets\Asset', 'icons/misc.png'],
+
+                                'items' =>
+                                    [
+                                        [
+                                            "name" => ['skeeks/measure', 'Units of measurement'],
+                                            "url"   => ["measure/admin-measure"],
+                                            "image"   => ['\skeeks\cms\measure\assets\Asset', 'icons/misc.png'],
+                                        ],
+
+                                        [
+                                            "name"          => ['skeeks/measure', 'Settings'],
+                                            "url"            => ["cms/admin-settings", "component" => 'skeeks\cms\measure\components\MeasureComponent'],
+                                            "image"            => ['skeeks\cms\assets\CmsAsset', 'images/icons/settings.png'],
+                                            "activeCallback" => function ($adminMenuItem) {
+                                                return (bool)(\Yii::$app->request->getUrl() == $adminMenuItem->getUrl());
+                                            },
+                                        ],
+                                    ],
+                            ],
+                        ],
+                    ],
+
+                ],
+            ],
+        ],
+    ],
+    'modules'    => [
         'measure' => [
-            'class'         => 'skeeks\cms\measure\Module',
-        ]
-    ]
+            'class' => 'skeeks\cms\measure\Module',
+        ],
+    ],
 ];
