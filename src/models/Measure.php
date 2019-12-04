@@ -16,12 +16,12 @@ use yii\helpers\ArrayHelper;
  * @property integer $updated_by
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $code
+ *
+ * @property string $code
  * @property string $name
- * @property string $symbol_rus
+ * @property string $symbol
  * @property string $symbol_intl
  * @property string $symbol_letter_intl
- * @property string $def
  */
 class Measure extends \skeeks\cms\models\Core
 {
@@ -39,8 +39,6 @@ class Measure extends \skeeks\cms\models\Core
     {
         parent::init();
 
-        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'beforeInsertChecks']);
-        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'beforeUpdateChecks']);
         $this->on(self::EVENT_AFTER_FIND, [$this, 'afterFindInit']);
     }
 
@@ -50,54 +48,22 @@ class Measure extends \skeeks\cms\models\Core
 
         if (!$this->name)
         {
-            $this->name = ArrayHelper::getValue($libsInfo, 'MEASURE_TITLE');
+            $this->name = ArrayHelper::getValue($libsInfo, 'name');
         }
 
-        if (!$this->symbol_rus)
+        if (!$this->symbol)
         {
-            $this->symbol_rus = ArrayHelper::getValue($libsInfo, 'SYMBOL_RUS');
+            $this->symbol = ArrayHelper::getValue($libsInfo, 'symbol');
         }
 
         if (!$this->symbol_intl)
         {
-            $this->symbol_intl = ArrayHelper::getValue($libsInfo, 'SYMBOL_INTL');
+            $this->symbol_intl = ArrayHelper::getValue($libsInfo, 'symbol_intl');
         }
 
         if (!$this->symbol_letter_intl)
         {
-            $this->symbol_letter_intl = ArrayHelper::getValue($libsInfo, 'SYMBOL_LETTER_INTL');
-        }
-    }
-    /**
-     * @param Event $e
-     * @throws Exception
-     */
-    public function beforeUpdateChecks(Event $e)
-    {
-        //Если этот элемент по умолчанию выбран, то все остальны нужно сбросить.
-        if ($this->def == Cms::BOOL_Y)
-        {
-            static::updateAll(
-                [
-                    'def' => Cms::BOOL_N
-                ],
-                ['!=', 'id', $this->id]
-            );
-        }
-
-    }
-    /**
-     * @param Event $e
-     * @throws Exception
-     */
-    public function beforeInsertChecks(Event $e)
-    {
-        //Если этот элемент по умолчанию выбран, то все остальны нужно сбросить.
-        if ($this->def == Cms::BOOL_Y)
-        {
-            static::updateAll([
-                'def' => Cms::BOOL_N
-            ]);
+            $this->symbol_letter_intl = ArrayHelper::getValue($libsInfo, 'symbol_letter_intl');
         }
     }
 
@@ -107,11 +73,11 @@ class Measure extends \skeeks\cms\models\Core
     public function rules()
     {
         return [
-            [['created_by', 'updated_by', 'created_at', 'updated_at', 'code'], 'integer'],
+            [['created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['code'], 'required'],
             [['name'], 'string', 'max' => 500],
-            [['symbol_rus', 'symbol_intl', 'symbol_letter_intl'], 'string', 'max' => 20],
-            [['def'], 'string', 'max' => 1],
+            [['code'], 'string', 'max' => 3],
+            [['symbol', 'symbol_intl', 'symbol_letter_intl'], 'string', 'max' => 20],
             [['code'], 'unique']
         ];
     }
@@ -129,10 +95,9 @@ class Measure extends \skeeks\cms\models\Core
             'updated_at' => \Yii::t('skeeks/measure', 'Updated At'),
             'code' => \Yii::t('skeeks/measure', 'Code'),
             'name' => \Yii::t('skeeks/measure', 'Unit of measure'),
-            'symbol_rus' => \Yii::t('skeeks/measure', 'Conventional symbol'),
+            'symbol' => \Yii::t('skeeks/measure', 'Conventional symbol'),
             'symbol_intl' => \Yii::t('skeeks/measure', 'Conventional symbol (international)'),
             'symbol_letter_intl' => \Yii::t('skeeks/measure', 'The code letter of symbol (international)'),
-            'def' => \Yii::t('skeeks/measure', 'Default'),
         ];
     }
 
@@ -142,6 +107,6 @@ class Measure extends \skeeks\cms\models\Core
      */
     public function getMeasureClassifierInfo()
     {
-        return (array) MeasureClassifier::getMeasureInfoByCode($this->code);
+        return (array) \Yii::$app->measureClassifier->getMeasureInfoByCode($this->code);
     }
 }

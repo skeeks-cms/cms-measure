@@ -8,12 +8,14 @@
 
 namespace skeeks\cms\measure\controllers;
 
+use skeeks\cms\backend\BackendAction;
+use skeeks\cms\backend\BackendController;
 use skeeks\cms\backend\controllers\BackendModelStandartController;
+use skeeks\cms\backend\ViewBackendAction;
 use skeeks\cms\components\Cms;
 use skeeks\cms\grid\BooleanColumn;
 use skeeks\cms\helpers\RequestResponse;
 use skeeks\cms\kladr\models\KladrLocation;
-use skeeks\cms\measure\libs\MeasureClassifier;
 use skeeks\cms\measure\models\Measure;
 use skeeks\cms\modules\admin\actions\AdminAction;
 use skeeks\cms\modules\admin\actions\modelEditor\AdminMultiModelEditAction;
@@ -26,17 +28,18 @@ use yii\helpers\ArrayHelper;
  * Class AdminKladrLocationController
  * @package skeeks\cms\kladr\controllers
  */
-class AdminMeasureController extends BackendModelStandartController
+class AdminMeasureController extends BackendController
 {
     use AdminModelEditorStandartControllerTrait;
 
     public function init()
     {
         $this->name = \Yii::t('skeeks/measure', 'Units of measurement');
+        /*$this->name = \Yii::t('skeeks/measure', 'Units of measurement');
         $this->modelShowAttribute = "code";
         $this->modelClassName = Measure::className();
 
-        $this->generateAccessActions = false;
+        $this->generateAccessActions = false;*/
 
         parent::init();
     }
@@ -47,78 +50,49 @@ class AdminMeasureController extends BackendModelStandartController
     public function actions()
     {
         return ArrayHelper::merge(parent::actions(), [
-                'index' => [
-                    'filters' => [
-                        'visibleFilters' => [
-                            'name',
-                        ],
-                    ],
-
-                    'grid' => [
-                        "visibleColumns" => [
-                            'checkbox',
-                            'actions',
-
-                            'code',
-                            'name',
-
-                            'symbol_rus',
-                            'symbol_intl',
-                            'symbol_letter_intl',
-
-                            'def',
-                        ],
-
-                        'columns' => [
-                            'def' => [
-                                'class' => BooleanColumn::class,
-                                /*'falseValue' => 0,
-                                'trueValue'  => 1,*/
-                            ],
-                        ],
-                    ],
-                ],
-
-                "def-multi" => [
-                    'class'        => AdminMultiModelEditAction::className(),
-                    "name"         => \Yii::t('skeeks/measure', 'Default'),
-                    //"icon"              => "glyphicon glyphicon-trash",
-                    "eachCallback" => [$this, 'eachMultiDef'],
-                    "priority"     => 0,
-                ],
-
-                "create" => [
-                    'fields' => [$this, 'updateFields'],
-                ],
-
-                "update" => [
-                    'fields' => [$this, 'updateFields'],
-                ],
+            'index' => [
+                'class' => ViewBackendAction::class
             ]
-        );
+            /*'index' => [
+                'filters' => [
+                    'visibleFilters' => [
+                        'name',
+                    ],
+                ],
+
+                'grid' => [
+                    "visibleColumns" => [
+                        'checkbox',
+                        'actions',
+
+                        'code',
+                        'name',
+
+                        'symbol',
+                        'symbol_intl',
+                        'symbol_letter_intl',
+                    ],
+                ],
+            ],
+
+
+            "create" => [
+                'fields' => [$this, 'updateFields'],
+            ],
+
+            "update" => [
+                'fields' => [$this, 'updateFields'],
+            ],*/
+        ]);
     }
 
 
-    /**
-     * @param $model
-     * @param $action
-     * @return bool
-     */
-    public function eachMultiDef($model, $action)
+    public function updateFields()
     {
-        try {
-            $model->def = Cms::BOOL_Y;
-            return $model->save(false);
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    public function updateFields() {
         return [
             'code',
             'name',
-            'symbol_rus',
+            'symbol',
             'symbol_intl',
             'symbol_letter_intl',
         ];

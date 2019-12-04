@@ -17,7 +17,8 @@
         }
     ],
     "require": {
-        "skeeks/cms": "~5.0 || dev-master"
+        "skeeks/cms": "~5.0 || dev-master",
+        "skeeks/yii2-measure-classifier": "^1.0.0 || dev-master"
     },
     "autoload": {
         "psr-4": {
