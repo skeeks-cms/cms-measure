@@ -86,16 +86,18 @@ class MeasureComponent extends Component
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
-            'default_measure_code'    => 'Валюта по умолчанию',
-            'active_measure_codes'    => 'Включенные для выбора валюты',
+            'default_measure_code'    => 'Единица по умолчанию',
+            'active_measure_codes'    => 'Валюты по умолчанию',
         ]);
     }
-
+    
     public function attributeHints()
     {
         return ArrayHelper::merge(parent::attributeHints(), [
+            'active_measure_codes'    => 'Валюты которые показываются первыми при выборе в списке',
         ]);
     }
+
 
 
     /**
@@ -112,7 +114,45 @@ class MeasureComponent extends Component
             }
         }
         
+        return $result;
+    }
+    
+    public function getDataForSelect()
+    {
+        $result = [];
+
+        $first = [];
+        foreach ((array) $this->active_measure_codes as $key => $code)
+        {
+            if ($model = \Yii::$app->measureClassifier->getMeasureByCode($code)) {
+                $first[$code] = $model->name . " (" . $model->symbol . ") " . "[" . $model->code . "]";
+            }
+        }
         
+        $result["По умолчанию"] = $first;
+        
+        foreach (\Yii::$app->measureClassifier->data as $key => $data)
+        {
+            $title1 = ArrayHelper::getValue($data, 'title');
+            ArrayHelper::remove($data, 'title');
+            
+            foreach ($data as $subKey => $subData)
+            {
+                $title = ArrayHelper::getValue($subData, 'title') . " - " . $title1;
+                ArrayHelper::remove($subData, 'title');
+                $tmpArr = [];
+                
+                foreach ((array) $subData as $measureKey => $measure)
+                {
+                    if (!in_array(ArrayHelper::getValue($measure, 'code'), $this->active_measure_codes)) {
+                        $tmpArr[ArrayHelper::getValue($measure, 'code')] = ArrayHelper::getValue($measure, 'name') . " (" . ArrayHelper::getValue($measure, 'symbol') . ") " . "[" . ArrayHelper::getValue($measure, 'code') . "]";
+                    }
+                }
+                
+                $result[$title] = $tmpArr;
+            }
+        }
+
         return $result;
     }
 }
