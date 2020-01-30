@@ -8,30 +8,17 @@
 
 namespace skeeks\cms\measure\controllers;
 
-use skeeks\cms\backend\BackendAction;
 use skeeks\cms\backend\BackendController;
-use skeeks\cms\backend\controllers\BackendModelStandartController;
 use skeeks\cms\backend\ViewBackendAction;
-use skeeks\cms\components\Cms;
-use skeeks\cms\grid\BooleanColumn;
-use skeeks\cms\helpers\RequestResponse;
 use skeeks\cms\kladr\models\KladrLocation;
 use skeeks\cms\measure\models\Measure;
-use skeeks\cms\modules\admin\actions\AdminAction;
-use skeeks\cms\modules\admin\actions\modelEditor\AdminMultiModelEditAction;
-use skeeks\cms\modules\admin\controllers\AdminModelEditorController;
-use skeeks\cms\modules\admin\traits\AdminModelEditorStandartControllerTrait;
-use yii\grid\DataColumn;
 use yii\helpers\ArrayHelper;
 
 /**
- * Class AdminKladrLocationController
- * @package skeeks\cms\kladr\controllers
+ * @author Semenov Alexander <semenov@skeeks.com>
  */
 class AdminMeasureController extends BackendController
 {
-    use AdminModelEditorStandartControllerTrait;
-
     public function init()
     {
         $this->name = \Yii::t('skeeks/measure', 'Units of measurement');
@@ -51,7 +38,7 @@ class AdminMeasureController extends BackendController
     {
         return ArrayHelper::merge(parent::actions(), [
             'index' => [
-                'class' => ViewBackendAction::class
+                'class' => ViewBackendAction::class,
             ]
             /*'index' => [
                 'filters' => [
