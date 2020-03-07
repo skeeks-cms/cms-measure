@@ -8,25 +8,28 @@
 
 namespace skeeks\cms\measure\controllers;
 
-use skeeks\cms\backend\BackendController;
+use skeeks\cms\backend\controllers\BackendModelStandartController;
+use skeeks\cms\backend\grid\DefaultActionColumn;
 use skeeks\cms\backend\ViewBackendAction;
 use skeeks\cms\kladr\models\KladrLocation;
-use skeeks\cms\measure\models\Measure;
+use skeeks\cms\measure\models\CmsMeasure;
+use skeeks\yii2\form\fields\FieldSet;
+use skeeks\yii2\form\fields\NumberField;
 use yii\helpers\ArrayHelper;
 
 /**
  * @author Semenov Alexander <semenov@skeeks.com>
  */
-class AdminMeasureController extends BackendController
+class AdminMeasureController extends BackendModelStandartController
 {
     public function init()
     {
         $this->name = \Yii::t('skeeks/measure', 'Units of measurement');
-        /*$this->name = \Yii::t('skeeks/measure', 'Units of measurement');
-        $this->modelShowAttribute = "code";
-        $this->modelClassName = Measure::className();
 
-        $this->generateAccessActions = false;*/
+        $this->modelShowAttribute = "asText";
+        $this->modelClassName = CmsMeasure::class;
+
+        $this->generateAccessActions = false;
 
         parent::init();
     }
@@ -37,28 +40,38 @@ class AdminMeasureController extends BackendController
     public function actions()
     {
         return ArrayHelper::merge(parent::actions(), [
-            'index' => [
+            'classifier' => [
                 'class' => ViewBackendAction::class,
-            ]
-            /*'index' => [
+                'name' => 'Классификатор',
+                'icon' => 'fa fa-list'
+            ],
+            'index'      => [
                 'filters' => [
                     'visibleFilters' => [
+                        'code',
                         'name',
                     ],
                 ],
-
                 'grid' => [
+                    'defaultOrder' => [
+                        //'def' => SORT_DESC,
+                        'priority' => SORT_ASC
+                    ],
                     "visibleColumns" => [
                         'checkbox',
                         'actions',
 
-                        'code',
-                        'name',
+                        'customName',
 
-                        'symbol',
-                        'symbol_intl',
-                        'symbol_letter_intl',
+                        'priority',
                     ],
+                    'columns' => [
+                        'customName' => [
+                            'attribute' => 'name',
+                            'class' => DefaultActionColumn::class,
+                            'viewAttribute' => 'asText'
+                        ]
+                    ]
                 ],
             ],
 
@@ -69,7 +82,7 @@ class AdminMeasureController extends BackendController
 
             "update" => [
                 'fields' => [$this, 'updateFields'],
-            ],*/
+            ],
         ]);
     }
 
@@ -77,11 +90,27 @@ class AdminMeasureController extends BackendController
     public function updateFields()
     {
         return [
-            'code',
-            'name',
-            'symbol',
-            'symbol_intl',
-            'symbol_letter_intl',
+            'main' => [
+                'class' => FieldSet::class,
+                'name' => 'Основные данные',
+                'fields' => [
+                    'code',
+                    'name',
+                    'symbol',
+                ]
+            ],
+            'second' => [
+                'class' => FieldSet::class,
+                'elementOptions' => ['isOpen' => false],
+                'name' => 'Дополнительно',
+                'fields' => [
+                    'symbol_intl',
+                    'symbol_letter_intl',
+                    'priority' => [
+                        'class' => NumberField::class
+                    ]
+                ]
+            ],
         ];
     }
 
