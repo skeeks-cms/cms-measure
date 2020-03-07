@@ -88,11 +88,11 @@ class m200307_090602_append_data_table__cms_measure extends Migration
             'priority' => 350,
         ]);
 
-        $this->insert('{{%cms_measure}}', [
+        /*$this->insert('{{%cms_measure}}', [
             'code'   => '383',
             'name'   => 'Рубль',
             'symbol' => 'руб',
-        ]);
+        ]);*/
 
     }
 
