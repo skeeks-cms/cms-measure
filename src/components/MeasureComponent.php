@@ -9,6 +9,7 @@
 namespace skeeks\cms\measure\components;
 
 use skeeks\cms\base\Component;
+use skeeks\cms\measure\assets\Asset;
 use skeeks\yii2\form\fields\SelectField;
 use skeeks\yii2\measureClassifier\Measure;
 use yii\helpers\ArrayHelper;
@@ -20,6 +21,7 @@ use yii\helpers\ArrayHelper;
  */
 class MeasureComponent extends Component
 {
+
     /**
      * Можно задать название и описание компонента
      * @return array
@@ -28,6 +30,9 @@ class MeasureComponent extends Component
     {
         return array_merge(parent::descriptorConfig(), [
             'name' => \Yii::t('skeeks/measure', 'Units of measurement'),
+            'image' => [
+                Asset::class, 'icons/component-icon.png'
+            ],
         ]);
     }
 
