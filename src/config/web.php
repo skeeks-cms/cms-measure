@@ -13,12 +13,17 @@ return [
 
                     'settings' => [
                         'items' => [
-                            [
-                                "name"  => ['skeeks/measure', 'Units of measurement'],
-                                "url"   => ["cms-measure/admin-measure"],
-                                "image" => ['\skeeks\cms\measure\assets\Asset', 'icons/misc.png'],
-                            ],
-                        ],
+                            'list' => [
+                                'items' => [
+                                    [
+                                        "name"  => ['skeeks/measure', 'Units of measurement'],
+                                        "url"   => ["cms-measure/admin-measure"],
+                                        "image" => ['\skeeks\cms\measure\assets\Asset', 'icons/misc.png'],
+                                    ],
+                                ],
+                            ]
+                        ]
+                        
                     ],
 
                 ],

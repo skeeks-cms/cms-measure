@@ -15,6 +15,7 @@ use skeeks\cms\base\DynamicModel;
 use skeeks\cms\helpers\RequestResponse;
 use skeeks\cms\kladr\models\KladrLocation;
 use skeeks\cms\measure\models\CmsMeasure;
+use skeeks\cms\rbac\CmsManager;
 use skeeks\yii2\form\fields\FieldSet;
 use skeeks\yii2\form\fields\NumberField;
 use skeeks\yii2\form\fields\SelectField;
@@ -34,12 +35,7 @@ class AdminMeasureController extends BackendModelStandartController
         $this->modelClassName = CmsMeasure::class;
 
         $this->generateAccessActions = false;
-        $this->accessCallback = function () {
-            if (!\Yii::$app->skeeks->site->is_default) {
-                return false;
-            }
-            return \Yii::$app->user->can($this->uniqueId);
-        };
+        $this->permissionName = CmsManager::PERMISSION_ROLE_ADMIN_ACCESS;
 
         parent::init();
     }
